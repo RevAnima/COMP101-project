@@ -1,19 +1,30 @@
+/*
+  discription: This is a text based game where the player will be given a prompt and 3 choices
+  each choice will result in a change to the following resouces; Grade, energy, and happiness
+*/
+
+
 //Global start variables
 float energy = 300;
 float stress = 20;
 float happiness = 300;
+int i = 0; //indexing number for arrazy access
+int curWeek = 1; //Current Week
+int questionCnt = 1; //number questions answered for week change
 
 //Event Text
-String[] event = {"Class starts at 10AM what do you want to do","you're at your lecture what do you do now"};
+String[] event = {"Class starts at 10AM what do you want to do","at lecture what do you do now", "1st class is over what do you do now",
+                  "event4", "event5"};
 String eventTxt = event[0];//holds the current event text for usage
 
 
 //texts for location and choices
-String[] locations = {"Dorm Room","Home","lecture hall","Libaray","Dining Hall","Club Room" };
+String[] locations = {"Dorm Room","Home","lecture hall","Libaray","Dining Hall","Campus" };
+                      
 String locationLabel = locations[0];//holds the current location text for usage
-String[] choiceA = {"go to class","scroll on phone"};
-String[] choiceB = {"sleep in","take notes"};
-String[] choiceC = {"skip class","sleep"};
+String[] choiceA = {"go to class","Nap in class","Take a nap","event4choice1","event5choice1"};
+String[] choiceB = {"sleep in","Take notes","Study","event4choice2","event5choice2"};
+String[] choiceC = {"skip class","scroll on phone","chat with friends","event4choice3","event5choice3"};
 
 
 //booleans
@@ -34,17 +45,13 @@ void setup()
   fullScreen(); //sets the game screen width and height to take up the full screen of whatever device it is being used on
   frameRate(30);//sets frameRate to 30 so that animation changes are more visible
   
-  //creating the buttons
+  //creating the buttons for start screen
   commuter =  new Button(width/4,4*height/6,200,50,"Comuter");
   onCampus =  new Button(3*width/4,4*height/6,200,50,"On Campus");
-  choiceBtn1 = new Button(3*width/4,4*height/6,200,50,choiceA[0]);
-  choiceBtn2 = new Button(3*width/4,9*height/12,200,50,choiceB[0]);
-  choiceBtn3 = new Button(3*width/4,5*height/6,200,50,choiceB[0]);
-  startScrn();
-   
 }
 void draw()
 {
+ 
   //only show game screen when start screen is false/gone after picking what type of student you are
   if(startScreen)
   {
@@ -74,16 +81,25 @@ void mousePressed()
       }
     return;//ensures that actions taken on the start don't overlap with the game screen 
     } 
-     if(choiceBtn1.isMouseOver())//if choice 1 is picked, event 1 and choices changes to new event and choices
+    
+    if(eventTxt.equals(event[0]))
     {
-      println("Button clicked");
-      choiceBtn1.label = choiceA[1];
-      choiceBtn2.label = choiceB[1];
-      choiceBtn3.label = choiceC[1];
-      eventTxt = event[1];
-      locationLabel = locations[2];
+      questionCnt++;
+      println(questionCnt);
+      event1();  
     }
-
+    else if(eventTxt.equals(event[1]))
+    {
+      questionCnt++;
+       event2();  
+    }
+    else if(eventTxt.equals(event[2]))
+    {
+      questionCnt++;
+       event3();  
+    }
+    
+    
 }
 
 
@@ -116,13 +132,14 @@ void location()
 
 void drawTime()
 {
+  weekIncease();
   rectMode(CENTER);
   fill(255);
   rect(9*width/10,1*height/10,200,50,15);
   textAlign(CENTER,CENTER);//ensures that when text is writen text is generated at the center of the text box
   textSize(35);
   fill(0);
-  text("week: 1" , 9*width/10, 1*height/10);
+  text("week: " + curWeek , 9*width/10, 1*height/10);
 }
 
 void drawEnergyBar() //draws the Energy Resource bar, and has it decrease by a set amount over time
@@ -181,6 +198,12 @@ void drawEventTxtBox() // Main event text box
 
 void drawBtns()
 {
+  //these button creations are in the brawBtn function and not setup is so that it updats continuously for easier label changing
+  choiceBtn1 = new Button(3*width/4,4*height/6,200,50,choiceA[i]);
+  choiceBtn2 = new Button(3*width/4,9*height/12,200,50,choiceB[i]);
+  choiceBtn3 = new Button(3*width/4,5*height/6,200,50,choiceC[i]);
+  
+  //makes the button appear
   choiceBtn1.display();
   choiceBtn2.display();
   choiceBtn3.display();
@@ -210,4 +233,144 @@ void energyDecrease()
 void hapinessIncrease()
 {
   
+}
+
+void weekIncease()
+{
+  if(questionCnt>=3)
+  {
+    curWeek++;
+    questionCnt  = 1;
+  }
+  
+}
+
+//WORK ON THIS event1 IS ALREADY DONE WORK ON THE OTHER EVENTS
+void event1()
+{
+  if(choiceBtn1.isMouseOver())//if choice 1 is picked, event 1 and choices changes to new event and choices
+      {
+          println("Button clicked");
+           i = 1;
+          eventTxt = event[1];
+          locationLabel = locations[2];
+      }
+        else if(choiceBtn2.isMouseOver())//if choice 2 is picked, event 1 and choices changes to new event and choices
+      {
+          println("Button clicked");
+           i = 2;
+          eventTxt = event[2];
+          locationLabel = locations[5];
+      }
+        else if(choiceBtn3.isMouseOver())//if choice 3 is picked, event 1 and choices changes to new event and choices
+      {
+          println("Button clicked");
+           i = 2;
+          eventTxt = event[2];
+          locationLabel = locations[5];
+      }
+}
+
+//event 2 choice effects
+void event2()
+{
+  if(choiceBtn1.isMouseOver())//if choice 1 is picked, event 1 and choices changes to new event and choices
+      {
+          println("Button clicked");
+           i = 1;
+          eventTxt = event[1];
+          locationLabel = locations[2];
+      }
+        else if(choiceBtn2.isMouseOver())//if choice 1 is picked, event 1 and choices changes to new event and choices
+      {
+          println("Button clicked");
+           i = 1;
+          eventTxt = event[1];
+          locationLabel = locations[2];
+      }
+        else if(choiceBtn3.isMouseOver())//if choice 1 is picked, event 1 and choices changes to new event and choices
+      {
+          println("Button clicked");
+           i = 1;
+          eventTxt = event[1];
+          locationLabel = locations[2];
+      }
+}
+
+//event 3 choice effects
+void event3()
+{
+  if(choiceBtn1.isMouseOver())//if choice 1 is picked, event 1 and choices changes to new event and choices
+      {
+          println("Button clicked");
+           i = 1;
+          eventTxt = event[1];
+          locationLabel = locations[2];
+      }
+        else if(choiceBtn2.isMouseOver())//if choice 1 is picked, event 1 and choices changes to new event and choices
+      {
+          println("Button clicked");
+           i = 1;
+          eventTxt = event[1];
+          locationLabel = locations[2];
+      }
+        else if(choiceBtn3.isMouseOver())//if choice 1 is picked, event 1 and choices changes to new event and choices
+      {
+          println("Button clicked");
+           i = 1;
+          eventTxt = event[1];
+          locationLabel = locations[2];
+      }
+}
+
+//event 4 choice effects
+void event4()
+{
+  if(choiceBtn1.isMouseOver())//if choice 1 is picked, event 1 and choices changes to new event and choices
+      {
+          println("Button clicked");
+           i = 1;
+          eventTxt = event[1];
+          locationLabel = locations[2];
+      }
+        else if(choiceBtn2.isMouseOver())//if choice 1 is picked, event 1 and choices changes to new event and choices
+      {
+          println("Button clicked");
+           i = 1;
+          eventTxt = event[1];
+          locationLabel = locations[2];
+      }
+        else if(choiceBtn3.isMouseOver())//if choice 1 is picked, event 1 and choices changes to new event and choices
+      {
+          println("Button clicked");
+           i = 1;
+          eventTxt = event[1];
+          locationLabel = locations[2];
+      }
+}
+
+//event 4 choice effects
+void event5()
+{
+  if(choiceBtn1.isMouseOver())//if choice 1 is picked, event 1 and choices changes to new event and choices
+      {
+          println("Button clicked");
+           i = 1;
+          eventTxt = event[1];
+          locationLabel = locations[2];
+      }
+        else if(choiceBtn2.isMouseOver())//if choice 1 is picked, event 1 and choices changes to new event and choices
+      {
+          println("Button clicked");
+           i = 1;
+          eventTxt = event[1];
+          locationLabel = locations[2];
+      }
+        else if(choiceBtn3.isMouseOver())//if choice 1 is picked, event 1 and choices changes to new event and choices
+      {
+          println("Button clicked");
+           i = 1;
+          eventTxt = event[1];
+          locationLabel = locations[2];
+      }
 }
