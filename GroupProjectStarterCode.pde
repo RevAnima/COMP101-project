@@ -2,29 +2,38 @@
 float energy = 300;
 float stress = 0;
 float happiness = 0;
-float commuteBtnX;
-float onCampusBtnX;
+
+//startScrn var to remove it after picking whether you are a commuter or on campus student
+float startScrnbgY;
 float commuteBtnY;
 float onCampusBtnY;
+float startScrntxt;
 
 //Event Text
-String[] eventTxt = {"Class starts at 10AM what do you want to do"};
-String event_A_txt = "";
+String[] event = {"Class starts at 10AM what do you want to do","you're at your lecture what do you do now"};
+String eventTxt = event[0];
 String event_B_txt = "";
 String event_C_txt = "";
 String event_D_txt = "";
 
 //texts
 String[] locations = {"Dorm Room","Home","Libaray","Dining Hall","Club Room" };
-String[] choiceA = {"choice 1"};
-String choiceB = "";
-String choiceC = "";
+String[] choiceA = {"go to class","scroll on phone"};
+String[] choiceB = {"sleep in","take notes"};
+String[] choiceC = {"skip class","sleep"};
 
 //choice text selection
 String Choice1 = choiceA[0];
+String Choice3 = choiceB[0];
+String Choice2 = choiceC[0];
+
+//booleans
+boolean startScreen = true;
 
 //buttons
 Button choiceBtn1;
+Button choiceBtn2;
+Button choiceBtn3;
 Button commuter;
 Button onCampus;
 
@@ -32,20 +41,27 @@ void setup()
 {
   fullScreen();
   frameRate(30);
-   commuteBtnY = 4*height/6;
-   onCampusBtnY = 4*height/6;
-  
+  startScrnbgY = height/2;
+  commuteBtnY = 4*height/6;
+  onCampusBtnY = 4*height/6;
+  startScrntxt = height/2;
+  startScrn();
+   
 }
 void draw()
 {
-  background(180);
-  player();
-  drawEnergyBar();
-  drawHappinessBar();
-  drawStressBar();
-  drawEventTxtBox();
-  drawBtns();
-  startScrn();
+  if(!startScreen)
+  {
+    background(180);
+    player();
+    drawEnergyBar();
+    drawHappinessBar();
+    drawStressBar();
+    drawEventTxtBox();
+    drawBtns();
+  }
+
+  
   
   // if(energy >= 0)
   //{
@@ -55,16 +71,25 @@ void draw()
 
 void mousePressed()
 {
-  
-  if(choiceBtn1.isMouseOver())
+  if(!startScreen)
   {
-    println("Button clicked");
-    Choice1 = "hello";
+     if(choiceBtn1.isMouseOver())
+    {
+      println("Button clicked");
+      Choice1 = choiceA[1];
+      Choice2 = choiceB[1];
+      Choice3 = choiceC[1];
+      eventTxt = event[1];
+    }
   }
-  if(commuter.isMouseOver())
+  
+  if(commuter.isMouseOver() || onCampus.isMouseOver())
   {
      commuteBtnY = 10000;
      onCampusBtnY = 10000;
+     startScrnbgY = 10000;
+     startScrntxt = 10000;
+     startScreen = false;
   }
   
 }
@@ -73,11 +98,13 @@ void startScrn()
 {
   
   rectMode(CENTER);
-  fill(255);
-  rect(width/2,height/2,width,height);
+  fill(255); //background color for start screen
+  rect(width/2,startScrnbgY,width,height);
+  
+  textAlign(CENTER);
   textSize(50);
   fill(0);
-  text("Choose your lifestyel", width/2, height/2);
+  text("Choose your lifestyle", width/2, startScrntxt);
   commuter =  new Button(width/4,commuteBtnY,200,50,"Comuter");
   commuter.display();
   onCampus =  new Button(3*width/4,onCampusBtnY,200,50,"On Campus");
@@ -136,55 +163,23 @@ void drawEventTxtBox() // Main event text box
 {
   rectMode(CENTER);
   fill(255);
-  rect(width/2,3*height/4, 400,200);
+  strokeWeight(2);
+  rect(width/2,3*height/4, 475,200,35);
   fill(0);
   textSize(25);
   textAlign(CENTER,CENTER);
-  text("EVENT TEXT", width/2, 3*height/4);
+  text(eventTxt, width/2, 3*height/4);
 }
 
 void drawBtns()
 {
   choiceBtn1 = new Button(3*width/4,4*height/6,200,50,Choice1);
   choiceBtn1.display();
-  //choice1Btn(3*width/4,4*height/6,200,50);
-  choice2Btn();
-  choice3Btn();
+  choiceBtn2 = new Button(3*width/4,9*height/12,200,50,Choice2);
+  choiceBtn2.display();
+  choiceBtn3 = new Button(3*width/4,5*height/6,200,50,Choice3);
+  choiceBtn3.display();
 }
-//void choice1Btn(int cb1x, int cb1y, int cb1w, int cb1h)
-//{
-  
-//  rectMode(CENTER);
-//  fill(255);
-//  rect(cb1x,cb1y,cb1w,cb1h);
-//  fill(0);
-//  textSize(25);
-//  textAlign(CENTER,CENTER);
-//  text("choice 1", 3*width/4,4*height/6);
-//}
-
-void choice2Btn()
-{
-  rectMode(CENTER);
-  fill(255);
-  rect(3*width/4,9*height/12, 200,50);
-  fill(0);
-  textSize(25);
-  textAlign(CENTER,CENTER);
-  text("choice 2", 3*width/4,9*height/12);
-}
-
-void choice3Btn()
-{
-  rectMode(CENTER);
-  fill(255);
-  rect(3*width/4,5*height/6, 200,50);
-  fill(0);
-  textSize(25);
-  textAlign(CENTER,CENTER);
-  text("choice 3", 3*width/4,5*height/6);
-}
-
 
 
 void energyIncrease()

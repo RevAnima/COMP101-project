@@ -28,8 +28,8 @@ class Button { //button class for making the buttons
     rect(x, y, w, h, 8);          
 
     fill(0);
-    textAlign(CENTER, CENTER);
-    textSize(16);
+    textAlign(CENTER,CENTER);
+    textSize(18);
     text(label, x, y);
 
     popStyle();                   
