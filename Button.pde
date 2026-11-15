@@ -1,22 +1,24 @@
 class Button { //button class for making the buttons
   float x, y, w, h;          // setting the values need for the button
   String label;              // text shown on the button
-  color baseColor, hoverColor;
+  color baseColor, hoverColor; //base color of the button and the color when mouse is hovering over it
 
   Button(float x, float y, float w, float h, String label) {
+    //this.__ specifys the gloabl var for the class Button since both the global var and object var share the same name
     this.x = x;
     this.y = y;
     this.w = w;
     this.h = h;
     this.label = label;
-    this.baseColor = color(200);   // Normal fill: light gray
-    this.hoverColor = color(150);  // Hover fill: darker gray
+    this.baseColor = color(200);   // the base color of the buttons
+    this.hoverColor = color(135);  // the color of the buttons when hovering over them
   }
 
-  // Draw the button and change color on hover
+  // Draw the buttons and change color of button when mouse is hovering over them
   void display() {
-    pushStyle();                   // Save the sketch's current drawing settings
-    rectMode(CENTER);              // rect(x, y, ...) now treats x, y as the center
+    pushStyle();       /*saves the current drawing style, like fill(), stroke(), strokeWeight, 
+                       etc so that the style wont change and any changes made wont affect how the button looks*/
+    rectMode(CENTER);            
 
     if (isMouseOver()) {
       fill(hoverColor);
@@ -35,8 +37,7 @@ class Button { //button class for making the buttons
     popStyle();                   
   }
 
-  // Check if the mouse cursor is inside the button bounds.
-  // Since x, y is the center, the edges are half the width/height away.
+  // Checks if the mouse cursor is inside the boundarys of the button.
   boolean isMouseOver() {
     return mouseX >= x - w / 2 && mouseX <= x + w / 2 &&
            mouseY >= y - h / 2 && mouseY <= y + h / 2;

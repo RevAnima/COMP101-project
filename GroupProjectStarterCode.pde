@@ -1,31 +1,20 @@
 //Global start variables
 float energy = 300;
-float stress = 0;
-float happiness = 0;
-
-//startScrn var to remove it after picking whether you are a commuter or on campus student
-float startScrnbgY;
-float commuteBtnY;
-float onCampusBtnY;
-float startScrntxt;
+float stress = 20;
+float happiness = 300;
 
 //Event Text
 String[] event = {"Class starts at 10AM what do you want to do","you're at your lecture what do you do now"};
-String eventTxt = event[0];
-String event_B_txt = "";
-String event_C_txt = "";
-String event_D_txt = "";
+String eventTxt = event[0];//holds the current event text for usage
 
-//texts
-String[] locations = {"Dorm Room","Home","Libaray","Dining Hall","Club Room" };
+
+//texts for location and choices
+String[] locations = {"Dorm Room","Home","lecture hall","Libaray","Dining Hall","Club Room" };
+String locationLabel = locations[0];//holds the current location text for usage
 String[] choiceA = {"go to class","scroll on phone"};
 String[] choiceB = {"sleep in","take notes"};
 String[] choiceC = {"skip class","sleep"};
 
-//choice text selection
-String Choice1 = choiceA[0];
-String Choice3 = choiceB[0];
-String Choice2 = choiceC[0];
 
 //booleans
 boolean startScreen = true;
@@ -37,90 +26,119 @@ Button choiceBtn3;
 Button commuter;
 Button onCampus;
 
+
+
 void setup()
 {
-  fullScreen();
-  frameRate(30);
-  startScrnbgY = height/2;
-  commuteBtnY = 4*height/6;
-  onCampusBtnY = 4*height/6;
-  startScrntxt = height/2;
+  
+  fullScreen(); //sets the game screen width and height to take up the full screen of whatever device it is being used on
+  frameRate(30);//sets frameRate to 30 so that animation changes are more visible
+  
+  //creating the buttons
+  commuter =  new Button(width/4,4*height/6,200,50,"Comuter");
+  onCampus =  new Button(3*width/4,4*height/6,200,50,"On Campus");
+  choiceBtn1 = new Button(3*width/4,4*height/6,200,50,choiceA[0]);
+  choiceBtn2 = new Button(3*width/4,9*height/12,200,50,choiceB[0]);
+  choiceBtn3 = new Button(3*width/4,5*height/6,200,50,choiceB[0]);
   startScrn();
    
 }
 void draw()
 {
-  if(!startScreen)
+  //only show game screen when start screen is false/gone after picking what type of student you are
+  if(startScreen)
   {
+    startScrn();
+  }
+  else{
     background(180);
     player();
     drawEnergyBar();
     drawHappinessBar();
     drawStressBar();
+    drawTime();
     drawEventTxtBox();
+    location();
     drawBtns();
   }
-
-  
-  
-  // if(energy >= 0)
-  //{
-  //  energy -= 0.04;
-  //}
 }
 
 void mousePressed()
 {
-  if(!startScreen)
-  {
-     if(choiceBtn1.isMouseOver())
+    //checks if either commuter or on Campus was pick and removes the start screen
+    if(startScreen)
+    {
+      if(commuter.isMouseOver() || onCampus.isMouseOver())
+      {
+         startScreen = false;
+      }
+    return;//ensures that actions taken on the start don't overlap with the game screen 
+    } 
+     if(choiceBtn1.isMouseOver())//if choice 1 is picked, event 1 and choices changes to new event and choices
     {
       println("Button clicked");
-      Choice1 = choiceA[1];
-      Choice2 = choiceB[1];
-      Choice3 = choiceC[1];
+      choiceBtn1.label = choiceA[1];
+      choiceBtn2.label = choiceB[1];
+      choiceBtn3.label = choiceC[1];
       eventTxt = event[1];
+      locationLabel = locations[2];
     }
-  }
-  
-  if(commuter.isMouseOver() || onCampus.isMouseOver())
-  {
-     commuteBtnY = 10000;
-     onCampusBtnY = 10000;
-     startScrnbgY = 10000;
-     startScrntxt = 10000;
-     startScreen = false;
-  }
-  
+
 }
 
-void startScrn()
+
+void startScrn() //creates the start screen along with buttons deciding whether the player is a commuter or resident on campus
 {
   
   rectMode(CENTER);
   fill(255); //background color for start screen
-  rect(width/2,startScrnbgY,width,height);
+  rect(width/2,height/2,width,height);
   
-  textAlign(CENTER);
+  textAlign(CENTER,CENTER);//ensures that when text is writen text is generated at the center of the screen
   textSize(50);
   fill(0);
-  text("Choose your lifestyle", width/2, startScrntxt);
-  commuter =  new Button(width/4,commuteBtnY,200,50,"Comuter");
+  text("Choose your lifestyle", width/2, height/2);
   commuter.display();
-  onCampus =  new Button(3*width/4,onCampusBtnY,200,50,"On Campus");
   onCampus.display();
 }
 
-void drawEnergyBar() //Energy Resource bar
+//location text box, this tells the players where they are at currently
+void location()
+{
+  rectMode(CENTER);
+  fill(255);
+  rect(width/2,5*height/8,350,50,15);
+  textAlign(CENTER,CENTER);//ensures that when text is writen text is generated at the center of the text box
+  textSize(35);
+  fill(0);
+  text(locationLabel , width/2, 5*height/8);
+}
+
+void drawTime()
+{
+  rectMode(CENTER);
+  fill(255);
+  rect(9*width/10,1*height/10,200,50,15);
+  textAlign(CENTER,CENTER);//ensures that when text is writen text is generated at the center of the text box
+  textSize(35);
+  fill(0);
+  text("week: 1" , 9*width/10, 1*height/10);
+}
+
+void drawEnergyBar() //draws the Energy Resource bar, and has it decrease by a set amount over time
 {
   rectMode(CORNER);
   fill(255);
   rect(25,25,400,50,50);
   fill(255,255,10);
   rect(25,25,energy,50,50);
+    if(energy >= 0)
+  {
+    energy -= 0.04;
+  }
 }
 
-void drawHappinessBar() //Happiness Resource bar 
+void drawHappinessBar() //draws the Happiness Resource bar 
 {
   rectMode(CORNER);
   fill(255);
@@ -129,7 +147,7 @@ void drawHappinessBar() //Happiness Resource bar
   rect(25,80,energy,50,50);
 }
 
-void drawStressBar() //Stress Resource bar
+void drawStressBar() //draws the Stress Resource bar
 {
   rectMode(CORNER);
   fill(255);
@@ -149,16 +167,6 @@ void player() //Player png
   text("player", 1*width/4, height/2);
 }
 
-void drawGrades() // code for the grade value of students
-{
-
-}
-
-void drawMoney()
-{
-
-}
-
 void drawEventTxtBox() // Main event text box
 {
   rectMode(CENTER);
@@ -173,16 +181,23 @@ void drawEventTxtBox() // Main event text box
 
 void drawBtns()
 {
-  choiceBtn1 = new Button(3*width/4,4*height/6,200,50,Choice1);
   choiceBtn1.display();
-  choiceBtn2 = new Button(3*width/4,9*height/12,200,50,Choice2);
   choiceBtn2.display();
-  choiceBtn3 = new Button(3*width/4,5*height/6,200,50,Choice3);
   choiceBtn3.display();
 }
 
+void drawGrades() // code for the grade value of students
+{
 
-void energyIncrease()
+}
+
+//draws the curreny amount of money a student has
+void drawMoney()
+{
+
+}
+
+void energyIncrease()//function for choices made that'll incresae energy
 {
 
 }
@@ -195,35 +210,4 @@ void energyDecrease()
 void hapinessIncrease()
 {
   
-}
-
-void eventA()//morning
-{
-
-}
-
-void eventB()//lunch
-{
-
-}
-
-void eventC()//afternoon
-{
-
-}
-
-void eventD()//night
-{
-
-}
-
-
-void forcedRestEvent()//may not be implemented
-{
-
-}
-
-void forcedEatEvent()//may not be implemented
-{
-
 }
