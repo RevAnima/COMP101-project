@@ -1,19 +1,24 @@
 /*
   Group Number: 3102
-  Group Members: 
+  Group Name: Retriver Dawgs
+  Group Members: MARLEY, MCKAYLA, AMINA, ASHIRA, EDWARD
   
-  discription: This is a text based game where the player will be given a prompt and 3 choices
+  Discription: This is a text based game where the player will be given a prompt and 3 choices
   each choice will result in a change to the following resouces; Grade, energy, and happiness
   
-  //the numbers next to the texts just help identify what the index value is quicker
+  Features: This game will have small mini games for the player to go through depending on their choices 
+            though none of them have been implemented yet.
+  
+  The numbers next to the texts just help identify what the index value is for quicker usage
 */
 
+//Global variables
 
 //Global start variables
 float energy = 300;
 float stress = 20;
 float happiness = 300;
-int i = 0; //indexing number for arrazy access
+int i = 0; //indexing number for array access
 int curWeek = 1; //Current Week
 int questionCnt = 1; //number questions answered for week change
 
@@ -170,7 +175,7 @@ void drawHappinessBar() //draws the Happiness Resource bar
   fill(255);
   rect(25,80,400,50,50);
   fill(0,255,0);
-  rect(25,80,energy,50,50);
+  rect(25,80,happiness,50,50);
 }
 
 void drawStressBar() //draws the Stress Resource bar
@@ -179,7 +184,7 @@ void drawStressBar() //draws the Stress Resource bar
   fill(255);
   rect(25,135,400,50,50);
   fill(255,0,0);
-  rect(25,135,energy,50,50);
+  rect(25,135,stress,50,50);
 }
 
 void player() //Player png
@@ -257,6 +262,7 @@ void weekIncease()
 //WORK ON THIS event1 IS ALREADY DONE WORK ON THE OTHER EVENTS
 void event1()//Dorm
 {
+  //go to class
   if(choiceBtn1.isMouseOver())//if choice 1 is picked, event 1 and choices changes to new event and choices
       {
           println("Button clicked");
@@ -264,6 +270,7 @@ void event1()//Dorm
           eventTxt = event[1];
           locationLabel = locations[2];
       }
+      //sleep in
         else if(choiceBtn2.isMouseOver())//if choice 2 is picked, event 1 and choices changes to new event and choices
       {
           println("Button clicked");
@@ -271,6 +278,7 @@ void event1()//Dorm
           eventTxt = event[2];
           locationLabel = locations[5];
       }
+      //skip class
         else if(choiceBtn3.isMouseOver())//if choice 3 is picked, event 1 and choices changes to new event and choices
       {
           println("Button clicked");
@@ -283,23 +291,26 @@ void event1()//Dorm
 //event 2 choice effects
 void event2()//lecture or class
 {
+  //talk to friends
   if(choiceBtn1.isMouseOver())//if choice 1 is picked, event 1 and choices changes to new event and choices
       {
-          println("Button clicked"); //talk to friends
+          println("Button clicked"); 
            i = 2;
           eventTxt = event[2];
           locationLabel = locations[5];
       }
+      //take notes
         else if(choiceBtn2.isMouseOver())//if choice 1 is picked, event 1 and choices changes to new event and choices
       {
-          println("Button clicked");//take nots
+          println("Button clicked");
            i = 2;
           eventTxt = event[2];
           locationLabel = locations[5];
       }
+      //watch tiktoks
         else if(choiceBtn3.isMouseOver())//if choice 1 is picked, event 1 and choices changes to new event and choices
       {
-          println("Button clicked");//watch tiktoks
+          println("Button clicked");
            i = 2;
           eventTxt = event[2];
           locationLabel = locations[5];
@@ -311,21 +322,24 @@ void event3()//campus
 {
   if(choiceBtn1.isMouseOver())//if choice 1 is picked, event 1 and choices changes to new event and choices
       {
-          println("Button clicked");//lunch btn
+        //lunch btn
+          println("Button clicked");
            i = 3;
           eventTxt = event[3];
           locationLabel = locations[4];
       }
+      //do homework
         else if(choiceBtn2.isMouseOver())//if choice 1 is picked, event 1 and choices changes to new event and choices
       {
-          println("Button clicked");//do homework
+          println("Button clicked");
            i = 3;
           eventTxt = event[1];
           locationLabel = locations[2];
       }
+      //watch tiktoks
         else if(choiceBtn3.isMouseOver())//if choice 1 is picked, event 1 and choices changes to new event and choices
       {
-          println("Button clicked");//watch tiktoks
+          println("Button clicked");
            i = 3;
           eventTxt = event[1];
           locationLabel = locations[2];
@@ -335,21 +349,24 @@ void event3()//campus
 //event 4 choice effects
 void event4()//lunch
 {
-  if(choiceBtn1.isMouseOver())//if choice 1 is picked, event 1 and choices changes to new event and choices
+  //eat alone
+  if(choiceBtn1.isMouseOver())//if choice 1 is picked, event 4 and choices changes to new event and choices
       {
           println("Button clicked");
            i = 4;
           eventTxt = event[4];
           locationLabel = locations[3];
       }
-        else if(choiceBtn2.isMouseOver())//if choice 1 is picked, event 1 and choices changes to new event and choices
+      //eat with friends
+        else if(choiceBtn2.isMouseOver())//if choice 1 is picked, event 4 and choices changes to new event and choices
       {
           println("Button clicked");
            i = 4;
           eventTxt = event[4];
           locationLabel = locations[3];
       }
-        else if(choiceBtn3.isMouseOver())//if choice 1 is picked, event 1 and choices changes to new event and choices
+      //undecided
+        else if(choiceBtn3.isMouseOver())//if choice 1 is picked, event 4 and choices changes to new event and choices
       {
           println("Button clicked");
            i = 4;
@@ -358,24 +375,25 @@ void event4()//lunch
       }
 }
 
-//event 4 choice effects
+
+//event 5 choice effects
 void event5()//work or dorm night
 {
-  if(choiceBtn1.isMouseOver())//if choice 1 is picked, event 1 and choices changes to new event and choices
+  if(choiceBtn1.isMouseOver())//if choice 1 is picked, event 5 and choices changes to new event and choices
       {
           println("Button clicked");
            i = 5;
           eventTxt = event[1];
           locationLabel = locations[2];
       }
-        else if(choiceBtn2.isMouseOver())//if choice 1 is picked, event 1 and choices changes to new event and choices
+        else if(choiceBtn2.isMouseOver())//if choice 1 is picked, event 5 and choices changes to new event and choices
       {
           println("Button clicked");
            i = 5;
           eventTxt = event[1];
           locationLabel = locations[2];
       }
-        else if(choiceBtn3.isMouseOver())//if choice 1 is picked, event 1 and choices changes to new event and choices
+        else if(choiceBtn3.isMouseOver())//if choice 1 is picked, event 5 and choices changes to new event and choices
       {
           println("Button clicked");
            i = 5;
