@@ -2,6 +2,10 @@
 float energy = 300;
 float stress = 0;
 float happiness = 0;
+float commuteBtnX;
+float onCampusBtnX;
+float commuteBtnY;
+float onCampusBtnY;
 
 //Event Text
 String[] eventTxt = {"Class starts at 10AM what do you want to do"};
@@ -28,7 +32,8 @@ void setup()
 {
   fullScreen();
   frameRate(30);
-  
+   commuteBtnY = 4*height/6;
+   onCampusBtnY = 4*height/6;
   
 }
 void draw()
@@ -40,7 +45,7 @@ void draw()
   drawStressBar();
   drawEventTxtBox();
   drawBtns();
-  startScrn(3*width/4,width/4,4*height/6,4*height/6);
+  startScrn();
   
   // if(energy >= 0)
   //{
@@ -58,13 +63,14 @@ void mousePressed()
   }
   if(commuter.isMouseOver())
   {
-     startScrn(3*width/4,width/4,4*height/6,4*height/6);
+     commuteBtnY = 10000;
+     onCampusBtnY = 10000;
   }
+  
 }
 
-void startScrn(float onCampusX,float commuterX,float commuterY,float onCampusY)
+void startScrn()
 {
-  
   
   rectMode(CENTER);
   fill(255);
@@ -72,9 +78,9 @@ void startScrn(float onCampusX,float commuterX,float commuterY,float onCampusY)
   textSize(50);
   fill(0);
   text("Choose your lifestyel", width/2, height/2);
-  commuter =  new Button(commuterX,commuterY,200,50,"Comuter");
+  commuter =  new Button(width/4,commuteBtnY,200,50,"Comuter");
   commuter.display();
-  onCampus =  new Button(onCampusX,onCampusY,200,50,"On Campus");
+  onCampus =  new Button(3*width/4,onCampusBtnY,200,50,"On Campus");
   onCampus.display();
 }
 
