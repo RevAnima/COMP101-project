@@ -4,7 +4,8 @@
   Group Members: MARLEY, MCKAYLA, AMINA, ASHIRA, EDWARD
   
   Discription: This is a text based game where the player will be given a prompt and 3 choices
-  each choice will result in a change to the following resouces; Grade, energy, and happiness
+  each choice will result in a change to the following resouces; Grade, energy, and happiness,
+  they must manage these 3 resouces as they go through a semster at umbc
   
   Features: This game will have small mini games for the player to go through depending on their choices 
             though none of them have been implemented yet.
